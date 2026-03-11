@@ -2,33 +2,43 @@ import React ,{useState}from 'react'
 import axios from "axios";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+
 const Adminlogin = () => {
   const[username, setUserName]=useState("");
   const[password, setPassword]=useState("");
   const navigate=useNavigate();
+
   const handleSubmit=async(e)=>{
- e.preventDefault();
- try{
-  const res = await axios.post(
-  "http://127.0.0.1:8000/api/admin/login",
+    e.preventDefault();
+    try{
+      const res = await axios.post(
+  "http://127.0.0.1:8000/api/admin/login/",
   { username, password }
 );
-  if(res.data.success){
-    toast.success(res.data.message||"Login Successful")
-    localStorage.setItem("adminUser",res.data.username);
-    navigate("/admin/dashboard");
+      console.log(res.data);
+
+      if(res.data.success){
+  toast.success(res.data.message);
+  navigate("/admin/dashboard");
+}
+else{
+  toast.error(res.data.message);
+}
+    }
+
+   catch(err){
+  console.error("FULL ERROR:", err);
+
+  if(err.response){
+    console.log("Server Response:", err.response.data);
+    toast.error(err.response.data.message || "Server error");
   }
   else{
-     toast.error(res.data.message||"Invalid credentials")
+    toast.error("Backend not reachable");
+  }
+}
+  }
 
-  }
- }
- catch(err){
-  console.error(err);
-  toast.error("Something went wrong!");
- }
-  }
- 
   return (
     <div 
       className="py-5"
@@ -51,21 +61,27 @@ const Adminlogin = () => {
                 Use the admin account created with <code>createsuperuser</code>
               </p>
             </div>
+
             <div className="card border-0 shadow-sm rounded-3">
               <div className="card-body p-4">
                 <form onSubmit={handleSubmit}>
+
                   <div className="mb-3">
                     <label className="form-label small fw-medium">UserName</label>
                     <div className="input-group">
                       <span className="input-group-text">
                         <i className="fa-regular fa-user bg-transparent"></i>
-
                       </span>
-                      <input type="text" className="form-control" placeholder="Enter admin username:" required
-                      value={username}
-                      onChange={(e)=>setUserName(e.target.value)}/>
-                    </div>
 
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter admin username:"
+                        required
+                        value={username}
+                        onChange={(e)=>setUserName(e.target.value)}
+                      />
+                    </div>
                   </div>
 
                   <div className="mb-3">
@@ -73,15 +89,23 @@ const Adminlogin = () => {
                     <div className="input-group">
                       <span className="input-group-text">
                         <i className="fa-solid fa-key"></i>
-
                       </span>
-                      <input type="password" className="form-control" placeholder="******" required
-                       value={password}
-                      onChange={(e)=>setPassword(e.target.value)}/>
-                    </div>
 
+                      <input
+                        type="password"
+                        className="form-control"
+                        placeholder="******"
+                        required
+                        value={password}
+                        onChange={(e)=>setPassword(e.target.value)}
+                      />
+                    </div>
                   </div>
-                  <button type="submit" className="btn btn-primary">Log in</button>
+
+                  <button type="submit" className="btn btn-primary">
+                    Log in
+                  </button>
+
                 </form>
               </div>
             </div>
@@ -93,4 +117,4 @@ const Adminlogin = () => {
   )
 }
 
-export default Adminlogin
+export default Adminlogin 

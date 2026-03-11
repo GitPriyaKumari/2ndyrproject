@@ -1,9 +1,7 @@
 from django.contrib import admin
-from django.urls import path, include
-from .views import*
+from django.urls import path
+from .views import admin_login_api
 
 urlpatterns = [
-    path("api/admin/login",admin_login_api)
-
+    path("api/admin/login/", admin_login_api),
 ]
- 

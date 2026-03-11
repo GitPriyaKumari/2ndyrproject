@@ -15,11 +15,12 @@ function App() {
 
     <>
     <Header/>
+    <ToastContainer position="top-right" autoClose={2000}/>
     <Routes>
-      <Route path="/admin/login" element={<Adminlogin/>}>
-
-      </Route>
-    </Routes>
+  <Route path="/admin/login" element={<Adminlogin/>}/>
+  <Route path="/admin/dashboard" element={<h1>Admin Dashboard</h1>} />
+  
+</Routes>
       
     </>
   )
