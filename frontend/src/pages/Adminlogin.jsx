@@ -6,10 +6,12 @@ import {useNavigate} from "react-router-dom";
 const Adminlogin = () => {
   const[username, setUserName]=useState("");
   const[password, setPassword]=useState("");
+  const[loading, setLoading]=useState(false);
   const navigate=useNavigate();
 
   const handleSubmit=async(e)=>{
     e.preventDefault();
+    setLoading(true);
     try{
       const res = await axios.post(
   "http://127.0.0.1:8000/api/admin/login/",
@@ -36,6 +38,9 @@ else{
   else{
     toast.error("Backend not reachable");
   }
+}
+finally{
+  setLoading(false);
 }
   }
 
@@ -102,8 +107,10 @@ else{
                     </div>
                   </div>
 
-                  <button type="submit" className="btn btn-primary">
-                    Log in
+                  <button type="submit" className="btn btn-primary w-100">
+                  {loading ?( <><span className="spinner-border spinner-border-sm me-2"></span>Signing in... </>):
+                  (<><i className="fa-solid fa-right-to-bracket"></i>Sign in  </>)}
+                    
                   </button>
 
                 </form>

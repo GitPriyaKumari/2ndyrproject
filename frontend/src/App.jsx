@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import Adminlogin from './pages/Adminlogin';
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AdminDashboard from './pages/AdminDashboard';
 
 
 
@@ -16,10 +17,10 @@ function App() {
     <>
     <Header/>
     <ToastContainer position="top-right" autoClose={2000}/>
-    <Routes>
+   <Routes>
+  <Route path="/" element={<Adminlogin/>}/>
   <Route path="/admin/login" element={<Adminlogin/>}/>
-  <Route path="/admin/dashboard" element={<h1>Admin Dashboard</h1>} />
-  
+  <Route path="/admin/dashboard" element={<AdminDashboard/>}/>
 </Routes>
       
     </>
