@@ -1,8 +1,9 @@
 import React from 'react'
 
 const AdminDashboard = () => {
+    const adminUser=localStorage.getItem("adminUser");
   return (
-    <div>AdminDashboard</div>
+    <div>Hello {adminUser}</div>
   )
 }
 
