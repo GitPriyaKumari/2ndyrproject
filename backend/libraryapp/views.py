@@ -34,7 +34,7 @@ from rest_framework import status
 @api_view(["POST"])
 def add_category(request):
     name = request.data.get("name")
-    status = request.data.get("status","1")
+    category_status = request.data.get("status","1")
     is_active=True if str(status)=="1" else False
     category=Category.objects.create(name=name,is_active=is_active)
     serializer=CategorySerializer(category)
@@ -46,5 +46,5 @@ def add_category(request):
             "message": "Category has been created",
             "category": serializer.data
         },
-        status=status.HTTP_201_CREATED
+        status=201
     )

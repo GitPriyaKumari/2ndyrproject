@@ -144,7 +144,7 @@ const AddCategory = () => {
                               id="status-inactive"
                               name="status"
                             />
-                            <label className='form-check-label small' htmlFor='status-inactive'>
+                            <label className='form-check-label small' >
                               Inactive
                             </label>
                           </div>
