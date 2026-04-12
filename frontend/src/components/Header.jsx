@@ -1,9 +1,16 @@
 // Header.jsx
 import React from 'react';
-import { Link ,useLocation} from "react-router-dom";
+import { Link ,useLocation,useNavigate} from "react-router-dom";
 
 const Header = () => {
-    const location=useLocation()
+    const location=useLocation();
+    const adminUser = localStorage.getItem("adminUser");
+    const navigate=useNavigate();
+    const handleLogout=()=>{
+       localStorage.removeItem("adminUser");
+      navigate("/admin/login")
+    }
+
     const isActive=(path)=>{
       return  location.pathname===path ? "active text-primary fw-semibold":"";
 
@@ -67,6 +74,33 @@ const Header = () => {
                 Admin login
               </Link>
             </li>
+            {
+              adminUser &&(
+
+                <>
+                 <li className="nav-item">
+              <Link className={`nav-link ${isActive("/admin/dashboard")}`}to="/admin/dashboard">
+              <i className="fa-solid fa-gauge-high me-1"></i>
+                Dashboard
+              </Link>
+            </li>
+            
+             <li className="nav-item dropdown">
+              <button className='nav-link dropdown-toggle btn btn-link' data-bs-toggle="dropdown">
+              <i className="fa-solid fa-layer-group me-1"></i>Categories
+              </button>
+              <ul className="gropdown-menu dropdown-menu-end">
+                
+
+              </ul>
+              
+               
+            </li>
+            
+            </>
+
+              )
+            }
 
           </ul>
         </div>
