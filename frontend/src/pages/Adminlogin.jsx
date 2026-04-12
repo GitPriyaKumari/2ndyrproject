@@ -3,7 +3,8 @@ import axios from "axios";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 
-const Adminlogin = () => {
+const Adminlogin = ({ setIsAdmin }) => {   // ✅ CHANGE HERE
+  
   const[username, setUserName]=useState("");
   const[password, setPassword]=useState("");
   const[loading, setLoading]=useState(false);
@@ -12,36 +13,44 @@ const Adminlogin = () => {
   const handleSubmit=async(e)=>{
     e.preventDefault();
     setLoading(true);
+
     try{
       const res = await axios.post(
-  "http://127.0.0.1:8000/api/admin/login/",
-  { username, password }
-);
-      console.log(res.data);
+        "http://127.0.0.1:8000/api/admin/login/",
+        { username, password }
+      );
 
-      if(res.data.success){
+      console.log(res.data);
+if(res.data.success){
+
+  // ✅ ADD THESE 3 LINES HERE
+  localStorage.setItem("isAdmin", "true");
+  localStorage.setItem("username", username);
+  setIsAdmin(true);
+
   toast.success(res.data.message);
   navigate("/admin/dashboard");
 }
-else{
-  toast.error(res.data.message);
-}
+      else{
+        toast.error(res.data.message);
+      }
     }
 
-   catch(err){
-  console.error("FULL ERROR:", err);
+    catch(err){
+      console.error("FULL ERROR:", err);
 
-  if(err.response){
-    console.log("Server Response:", err.response.data);
-    toast.error(err.response.data.message || "Server error");
-  }
-  else{
-    toast.error("Backend not reachable");
-  }
-}
-finally{
-  setLoading(false);
-}
+      if(err.response){
+        console.log("Server Response:", err.response.data);
+        toast.error(err.response.data.message || "Server error");
+      }
+      else{
+        toast.error("Backend not reachable");
+      }
+    }
+
+    finally{
+      setLoading(false);
+    }
   }
 
   return (
@@ -108,9 +117,16 @@ finally{
                   </div>
 
                   <button type="submit" className="btn btn-primary w-100">
-                  {loading ?( <><span className="spinner-border spinner-border-sm me-2"></span>Signing in... </>):
-                  (<><i className="fa-solid fa-right-to-bracket"></i>Sign in  </>)}
-                    
+                    {loading ?(
+                      <>
+                        <span className="spinner-border spinner-border-sm me-2"></span>
+                        Signing in...
+                      </>
+                    ):
+                      <>
+                        <i className="fa-solid fa-right-to-bracket"></i> Sign in
+                      </>
+                    }
                   </button>
 
                 </form>
@@ -124,4 +140,4 @@ finally{
   )
 }
 
-export default Adminlogin 
+export default Adminlogin

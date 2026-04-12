@@ -91,11 +91,17 @@ const AddCategory = () => {
               </p>
             </div>
 
-            <div className="row g-4">
-              <div className="col-md-5">
+          <div className="row g-4 align-items-stretch">
+              <div className="col-md-10 d-flex">
 
-                <div className="card border-0 shadow-sm rounded-3">
-                  <div className="card-body p-4">
+              <div 
+  className="card border-0 shadow-sm rounded-3 w-100" 
+  
+>
+                  <div 
+  className="card-body p-4 d-flex flex-column"
+  style={{ height: "500px" }}
+>
                     <form onSubmit={handleSubmit}>
 
                       <div className="mb-3">
@@ -166,6 +172,7 @@ const AddCategory = () => {
                       </button>
 
                     </form>
+                    
                   </div>
                 </div>
 
